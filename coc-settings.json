@@ -1,0 +1,38 @@
+  {
+    "inlayHint.enable": false,
+    "python.sortImports.path": "isort",
+    "python.sortImports.args": ["--force-single-line-imports", "--single-line-exclusions", "typing", "--use-parentheses"],
+    "python.formatting.provider": "yapf",
+    "suggest.noselect": true,
+    "languageserver": {
+          "ccls": {
+              "command": "ccls",
+              "filetypes": [
+                  "c",
+                  "cc",
+                  "h",
+                  "cpp",
+                  "objc",
+                  "objcpp"
+              ],
+              "rootPatterns": [
+                  ".compiledb",
+                  ".ccls",
+                  "compile_commands.json",
+                  ".vim/",
+                  ".git/",
+                  ".hg/"
+              ],
+              "initializationOptions": {
+                  "cache": {
+                      "directory": "/tmp/ccls"
+                  },
+                  "index": {
+                      "threads": 4
+                  },
+                  "compilationDatabaseDirectory": ".compiledb"
+              }
+          }
+      }   
+  }
+
