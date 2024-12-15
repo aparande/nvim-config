@@ -5,6 +5,10 @@
     "python.formatting.provider": "yapf",
     "suggest.noselect": true,
     "languageserver": {
+          "veridian": {
+            "command": "veridian",
+            "filetypes": ["systemverilog", "verilog"]
+          },
           "ccls": {
               "command": "ccls",
               "filetypes": [

@@ -1,4 +1,5 @@
 let g:coc_disable_startup_warning = 1
+let g:vim_markdown_folding_disabled = 1
 
 set belloff=all
 set nocompatible
@@ -15,14 +16,25 @@ call plug#begin()
 
 " Plugin 'Valloric/YouCompleteMe'
 Plug 'preservim/nerdtree'
+Plug 'preservim/vim-markdown'
 Plug 'tpope/vim-fugitive'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tomasiser/vim-code-dark'
 Plug 'wesQ3/vim-windowswap'
 Plug 'sudar/vim-arduino-syntax'
+Plug 'Exafunction/codeium.vim', { 'branch': 'main' }
 
 call plug#end()
 filetype plugin indent on
+
+let g:rustfmt_autosave = 1
+
+let g:codeium_filetypes_disabled_by_default = v:true
+
+let g:codeium_filetypes = {
+    \ "rust": v:true,
+    \ "python": v:true,
+    \ }
 
 function FormatCPPBuffer()
   if &modified && !empty(findfile('.clang-format', expand('%:p:h') . ';'))
@@ -37,6 +49,7 @@ colorscheme codedark
 autocmd BufNewfile,BufRead *.ino set filetype=cpp
 autocmd FileType *.h,*.hpp,*.c,*.cpp,*.vert,*.frag,*.proto setlocal cindent
 autocmd BufWritePre *.h,*.hpp,*.c,*.cpp,*.vert,*.frag,*.proto,*.ino :call FormatCPPBuffer()
+autocmd BufWritePre *.sv,*.v,*. :call CocActionAsync('format')
 autocmd FileType *.py set local formatprg=yapf equalprg=yapf textwidth=80
 autocmd FileType *.rs set tabstop=4 shiftwidth=4 expandtab
 
@@ -100,6 +113,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gf :NERDTree<CR>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call ShowDocumentation()<CR>
