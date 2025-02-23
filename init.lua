@@ -9,10 +9,14 @@ vim.opt.signcolumn = 'yes'
 vim.opt.autoread = true
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.updatetime = 300
+vim.opt.laststatus = 2
+vim.opt.statusline = '%r %-m %-f %=%p %%'
 
 -- Packages
 require('paq') {
   'savq/paq-nvim',
+  'tpope/vim-fugitive',
   -- Theme
   'folke/tokyonight.nvim',
   -- Language Server & Code Completion
@@ -117,4 +121,19 @@ cmp.setup({
     -- Previous item
     ['<S-Tab>'] = cmp.mapping.select_prev_item({behavior = 'select'}),
   }),
+})
+
+-- Autoformatting
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*rs',
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*py',
+  callback = function()
+    vim.cmd('silent !yapf --in-place %')
+    vim.cmd('edit!')
+  end,
 })
