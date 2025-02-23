@@ -33,7 +33,10 @@ require('paq') {
 vim.cmd('colorscheme tokyonight-night')
 
 require('nvim-treesitter.configs').setup({
-  ensure_installed = {'lua', 'vim', 'markdown', 'python', 'rust', 'javascript'},
+  ensure_installed = {
+    'lua', 'vim', 'markdown', 'python', 'rust',
+    'javascript', 'verilog'
+  },
   auto_install = true,
 })
 
@@ -80,8 +83,11 @@ cmp.setup.filetype({'python', 'rust', 'lua'}, {
 
 -- LSPs
 local lspconfig = require('lspconfig')
-lspconfig.pyright.setup{}
-lspconfig.rust_analyzer.setup{}
+lspconfig.pyright.setup({})
+lspconfig.rust_analyzer.setup({})
+lspconfig.verible.setup({
+  cmd = { 'verible-verilog-ls' },
+})
 
 -- Keybindings
 vim.api.nvim_create_autocmd('LspAttach', {
