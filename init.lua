@@ -25,6 +25,7 @@ require('paq') {
   'neovim/nvim-lspconfig', 
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-buffer',
   'nvim-lua/plenary.nvim',
   'Exafunction/codeium.nvim',
 }
@@ -63,6 +64,7 @@ cmp.setup({
   },
   sources = {
     {name = 'nvim_lsp'},
+    {name = 'buffer'},
   },
   snippet = {
     expand = function(args)
@@ -85,9 +87,7 @@ cmp.setup.filetype({'python', 'rust', 'lua'}, {
 local lspconfig = require('lspconfig')
 lspconfig.pyright.setup({})
 lspconfig.rust_analyzer.setup({})
-lspconfig.verible.setup({
-  cmd = { 'verible-verilog-ls' },
-})
+lspconfig.svlangserver.setup({})
 
 -- Keybindings
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -131,7 +131,7 @@ cmp.setup({
 
 -- Autoformatting
 vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*rs',
+  pattern = {'*rs', '*.v', '*.sv'},
   callback = function()
     vim.lsp.buf.format()
   end,
